@@ -11,8 +11,21 @@ import path from "path"
 import cors from "cors";
 
 dotenv.config();
+const app = express(); 
 
-const app = express();
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://your-vercel-app.vercel.app"
+  ],
+  credentials: true
+}));
+
+
+app.use(express.json());
+app.use(cookieParser());
+
+
 const PORT = process.env.PORT;
 
 const __dirname = path.resolve();
@@ -46,15 +59,6 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 }
-
-
-app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://mern-stack-front-end.vercel.app/"
-  ],
-  credentials: true
-}));
 
 
 app.listen(PORT, () => {
