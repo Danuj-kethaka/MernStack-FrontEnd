@@ -47,7 +47,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-import cors from "cors";
 
 app.use(cors({
   origin: [
