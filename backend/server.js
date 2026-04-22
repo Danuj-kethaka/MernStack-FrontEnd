@@ -8,6 +8,7 @@ import petprofileRoutes from "./routes/PetProfile.route.js"
 import PetAdoption from "./routes/PetAdoption.route.js"
 import adminRoutes from "./routes/Admin.route.js"
 import path from "path"
+import cors from "cors";
 
 dotenv.config();
 
@@ -45,6 +46,16 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 }
+
+import cors from "cors";
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://mern-stack-front-end.vercel.app/"
+  ],
+  credentials: true
+}));
 
 
 app.listen(PORT, () => {
