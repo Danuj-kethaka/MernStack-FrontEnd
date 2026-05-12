@@ -16,52 +16,66 @@ const Navbar = () => {
           className={`${
             open ? "flex" : "hidden"
           } absolute top-full left-0 w-full bg-white border-t border-gray-200
-             flex-col text-center
-             lg:static lg:flex lg:flex-row lg:w-auto lg:border-0
-             lg:items-center lg:space-x-8 text-gray-700 font-medium`}
+            flex-col text-center
+            lg:static lg:flex lg:flex-row lg:w-auto lg:border-0
+            lg:items-center lg:space-x-8 text-gray-700 font-medium`}
         >
           <li>
-            <Link to="/" className="block px-4 py-3 hover:text-green-700">
+            <Link to="/"   onClick={() => setOpen(false)} className="block px-4 py-3 hover:text-green-700">
               Home
             </Link>
           </li>
+
           <li>
-            <Link to="/about" className="block px-4 py-3 hover:text-green-700">
+            <Link to="/about"   onClick={() => setOpen(false)}  className="block px-4 py-3 hover:text-green-700">
               About
             </Link>
           </li>
+
           <li>
-            <Link
-              to="/services"
-              className="block px-4 py-3 hover:text-green-700"
-            >
+            <Link to="/services"   onClick={() => setOpen(false)}  className="block px-4 py-3 hover:text-green-700">
               Services
             </Link>
           </li>
+
           <li>
-            <Link to="/PetPage" className="block px-4 py-3 hover:text-green-700">
+            <Link to="/PetPage"   onClick={() => setOpen(false)}  className="block px-4 py-3 hover:text-green-700">
               Pets
             </Link>
           </li>
+
           <li>
-            <Link
-              to="/contact"
-              className="block px-4 py-3 hover:text-green-700"
-            >
+            <Link to="/contact"   onClick={() => setOpen(false)} className="block px-4 py-3 hover:text-green-700">
               Contact
+            </Link>
+          </li>
+
+          {/* Mobile only */}
+          <li className="lg:hidden">
+            <Link to="/login"   onClick={() => setOpen(false)}  className="block px-4 py-3 hover:text-green-700">
+              Login
+            </Link>
+          </li>
+
+          <li className="lg:hidden px-4 pb-4">
+            <Link
+              to="/signup"   onClick={() => setOpen(false)}
+              className="block bg-green-700 text-white py-2 rounded-lg hover:bg-green-800"
+            >
+              Sign Up
             </Link>
           </li>
         </ul>
 
         <div className="hidden lg:flex items-center gap-4">
           <Link
-            to="/login"
+            to="/login"   onClick={() => setOpen(false)}
             className="text-gray-700 hover:text-green-700 font-medium"
           >
             Login
           </Link>
           <Link
-            to="/signup"
+            to="/signup"   onClick={() => setOpen(false)}
             className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800"
           >
             Sign Up
