@@ -172,19 +172,19 @@ const AdminDashBoard = () => {
               </button>
             </Link>
 
-            <Link to="/AdminAppointments">
+            <Link to="/AdminAccount/AdminAppointment">
               <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl transition">
                 View Appointments
               </button>
             </Link>
 
-            <Link to="/AdminPetProfile">
+            <Link to="/AdminAccount/AdminPetProfile">
               <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl transition">
                 Pet Profiles
               </button>
             </Link>
 
-            <Link to="/AdminUsers">
+            <Link to="/AdminAccount/users">
               <button className="w-full bg-gray-800 hover:bg-black text-white font-semibold py-3 rounded-xl transition">
                 Manage Users
               </button>
