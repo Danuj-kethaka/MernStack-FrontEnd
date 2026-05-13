@@ -12,13 +12,36 @@ import {
 } from "react-icons/fa";
 
 import { MdPets } from "react-icons/md";
+
 import { Link } from "react-router-dom";
+
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+} from "recharts";
+
+const COLORS = ["#22C55E", "#EF4444", "#FACC15"];
 
 const AdminDashBoard = () => {
   const { user, fetchUsers } = useUserStore();
-  const { PetProfile, fetchPetProfile } = usePetProfileStore();
-  const { appointments, fetchAppointments } = useAppointmentStore();
-  const { PetAdoption, fetchPetAdoption } = usePetAdoptionStore();
+
+  const { PetProfile, fetchPetProfile } =
+    usePetProfileStore();
+
+  const { appointments, fetchAppointments } =
+    useAppointmentStore();
+
+  const { PetAdoption, fetchPetAdoption } =
+    usePetAdoptionStore();
 
   useEffect(() => {
     fetchUsers();
@@ -35,9 +58,49 @@ const AdminDashBoard = () => {
     (a) => a.status === "accepted"
   );
 
+  const rejectedAppointments = appointments.filter(
+    (a) => a.status === "rejected"
+  );
+
+  /* PIE CHART DATA */
+  const appointmentChartData = [
+    {
+      name: "Accepted",
+      value: acceptedAppointments.length,
+    },
+    {
+      name: "Rejected",
+      value: rejectedAppointments.length,
+    },
+    {
+      name: "Pending",
+      value: pendingAppointments.length,
+    },
+  ];
+
+  /* BAR CHART DATA */
+  const systemData = [
+    {
+      name: "Users",
+      total: user.length,
+    },
+    {
+      name: "Pets",
+      total: PetProfile.length,
+    },
+    {
+      name: "Appointments",
+      total: appointments.length,
+    },
+    {
+      name: "Adoptions",
+      total: PetAdoption.length,
+    },
+  ];
+
   return (
     <div className="mt-20 min-h-screen bg-gray-100 p-4 sm:p-6">
-      
+
       {/* HEADER */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800">
@@ -55,7 +118,10 @@ const AdminDashBoard = () => {
         {/* TOTAL PETS */}
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
-            <p className="text-gray-500 text-sm">Total Pets</p>
+            <p className="text-gray-500 text-sm">
+              Total Pets
+            </p>
+
             <h2 className="text-3xl font-bold text-gray-800 mt-2">
               {PetProfile.length}
             </h2>
@@ -69,7 +135,10 @@ const AdminDashBoard = () => {
         {/* USERS */}
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
-            <p className="text-gray-500 text-sm">Total Users</p>
+            <p className="text-gray-500 text-sm">
+              Total Users
+            </p>
+
             <h2 className="text-3xl font-bold text-gray-800 mt-2">
               {user.length}
             </h2>
@@ -83,7 +152,10 @@ const AdminDashBoard = () => {
         {/* APPOINTMENTS */}
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
-            <p className="text-gray-500 text-sm">Appointments</p>
+            <p className="text-gray-500 text-sm">
+              Appointments
+            </p>
+
             <h2 className="text-3xl font-bold text-gray-800 mt-2">
               {appointments.length}
             </h2>
@@ -97,7 +169,10 @@ const AdminDashBoard = () => {
         {/* ADOPTIONS */}
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
-            <p className="text-gray-500 text-sm">Adoptions</p>
+            <p className="text-gray-500 text-sm">
+              Adoptions
+            </p>
+
             <h2 className="text-3xl font-bold text-gray-800 mt-2">
               {PetAdoption.length}
             </h2>
@@ -109,11 +184,79 @@ const AdminDashBoard = () => {
         </div>
       </div>
 
+      {/* CHART SECTION */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-10">
+
+        {/* PIE CHART */}
+        <div className="bg-white rounded-2xl shadow-md p-6">
+          <h2 className="text-xl font-bold text-gray-800 mb-6">
+            Appointment Status Overview
+          </h2>
+
+          <div className="h-[350px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={appointmentChartData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={120}
+                  dataKey="value"
+                  label
+                >
+                  {appointmentChartData.map(
+                    (entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    )
+                  )}
+                </Pie>
+
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* BAR CHART */}
+        <div className="bg-white rounded-2xl shadow-md p-6">
+          <h2 className="text-xl font-bold text-gray-800 mb-6">
+            System Analytics
+          </h2>
+
+          <div className="h-[350px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={systemData}>
+                <CartesianGrid strokeDasharray="3 3" />
+
+                <XAxis dataKey="name" />
+
+                <YAxis />
+
+                <Tooltip />
+
+                <Legend />
+
+                <Bar
+                  dataKey="total"
+                  fill="#3B82F6"
+                  radius={[10, 10, 0, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
       {/* SECOND ROW */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
         {/* RECENT APPOINTMENTS */}
         <div className="xl:col-span-2 bg-white rounded-2xl shadow-md p-6">
+
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-gray-800">
               Recent Appointments
@@ -125,41 +268,48 @@ const AdminDashBoard = () => {
           </div>
 
           <div className="space-y-4">
-            {appointments.slice(0, 5).map((appointment) => (
-              <div
-                key={appointment._id}
-                className="flex items-center justify-between border rounded-xl p-4 hover:bg-gray-50 transition"
-              >
-                <div>
-                  <h3 className="font-semibold text-gray-800">
-                    {appointment.petname}
-                  </h3>
+            {appointments.slice(0, 5).map(
+              (appointment) => (
+                <div
+                  key={appointment._id}
+                  className="flex items-center justify-between border rounded-xl p-4 hover:bg-gray-50 transition"
+                >
+                  <div>
+                    <h3 className="font-semibold text-gray-800">
+                      {appointment.petname}
+                    </h3>
 
-                  <p className="text-sm text-gray-500">
-                    {new Date(appointment.date).toLocaleDateString()} •{" "}
-                    {appointment.time}
-                  </p>
-                </div>
+                    <p className="text-sm text-gray-500">
+                      {new Date(
+                        appointment.date
+                      ).toLocaleDateString()}{" "}
+                      • {appointment.time}
+                    </p>
+                  </div>
 
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-semibold text-white
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-semibold text-white
                     ${
-                      appointment.status === "accepted"
+                      appointment.status ===
+                      "accepted"
                         ? "bg-green-500"
-                        : appointment.status === "rejected"
+                        : appointment.status ===
+                          "rejected"
                         ? "bg-red-500"
                         : "bg-yellow-500"
                     }`}
-                >
-                  {appointment.status}
-                </span>
-              </div>
-            ))}
+                  >
+                    {appointment.status}
+                  </span>
+                </div>
+              )
+            )}
           </div>
         </div>
 
         {/* QUICK ACTIONS */}
         <div className="bg-white rounded-2xl shadow-md p-6">
+
           <h2 className="text-xl font-bold text-gray-800 mb-6">
             Quick Actions
           </h2>
@@ -193,12 +343,15 @@ const AdminDashBoard = () => {
 
           {/* EXTRA INFO */}
           <div className="mt-8 bg-red-50 border border-red-100 rounded-2xl p-4">
+
             <div className="flex items-center gap-3">
               <FaHeartbeat className="text-red-500 text-2xl" />
 
               <div>
                 <p className="font-bold text-gray-800">
-                  {acceptedAppointments.length}
+                  {
+                    acceptedAppointments.length
+                  }
                 </p>
 
                 <p className="text-sm text-gray-500">
