@@ -50,22 +50,18 @@ const AdminPetProfile = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-blue-50 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <div className="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl shadow-xl p-6 mb-8 text-white relative overflow-hidden">
-          
-          <div className="absolute top-0 right-0 w-60 h-60 bg-white/10 rounded-full blur-3xl"></div>
-
-          <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+        <div className="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl shadow-lg p-6 mb-8 text-white">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-3">
+              <h1 className="text-3xl font-bold flex items-center gap-2">
                 <FiHeart className="text-pink-200" />
                 Pet Profiles Dashboard
               </h1>
-
-              <p className="text-sm mt-2 text-cyan-100">
+              <p className="text-sm mt-2 text-blue-100">
                 Manage all registered pet profiles easily.
               </p>
             </div>
@@ -77,28 +73,24 @@ const AdminPetProfile = () => {
                 placeholder="Search pet name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 rounded-xl border border-white/20 bg-white text-gray-700 shadow-lg outline-none focus:ring-2 focus:ring-cyan-200 transition"
+                className="w-full pl-11 pr-4 py-3 rounded-xl border-none outline-none text-gray-700 shadow-md"
               />
-
               <FaSearch className="absolute top-4 left-4 text-gray-400" />
             </div>
           </div>
         </div>
 
-        {/* Stats Cards */}
+        {/* Stats Card */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-
-          <div className="bg-white/90 backdrop-blur-sm border border-cyan-100 rounded-2xl shadow-md p-5 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-2xl shadow-md p-5">
             <h2 className="text-gray-500 text-sm">Total Pets</h2>
-
-            <p className="text-3xl font-bold text-cyan-600 mt-2">
+            <p className="text-3xl font-bold text-blue-600 mt-2">
               {PetProfile.length}
             </p>
           </div>
 
-          <div className="bg-white/90 backdrop-blur-sm border border-pink-100 rounded-2xl shadow-md p-5 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-2xl shadow-md p-5">
             <h2 className="text-gray-500 text-sm">Cats</h2>
-
             <p className="text-3xl font-bold text-pink-500 mt-2">
               {
                 PetProfile.filter(
@@ -108,9 +100,8 @@ const AdminPetProfile = () => {
             </p>
           </div>
 
-          <div className="bg-white/90 backdrop-blur-sm border border-green-100 rounded-2xl shadow-md p-5 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-2xl shadow-md p-5">
             <h2 className="text-gray-500 text-sm">Dogs</h2>
-
             <p className="text-3xl font-bold text-green-500 mt-2">
               {
                 PetProfile.filter(
@@ -120,9 +111,8 @@ const AdminPetProfile = () => {
             </p>
           </div>
 
-          <div className="bg-white/90 backdrop-blur-sm border border-yellow-100 rounded-2xl shadow-md p-5 hover:shadow-xl transition-all duration-300">
+          <div className="bg-white rounded-2xl shadow-md p-5">
             <h2 className="text-gray-500 text-sm">Other Pets</h2>
-
             <p className="text-3xl font-bold text-yellow-500 mt-2">
               {
                 PetProfile.filter(
@@ -136,42 +126,32 @@ const AdminPetProfile = () => {
         </div>
 
         {/* Table */}
-        <div className="bg-white/90 backdrop-blur-sm border border-blue-100 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-2xl overflow-hidden">
-
+        <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
           <div className="overflow-x-auto">
-
             <table className="min-w-full">
-
-              <thead className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
+              <thead className="bg-gray-900 text-white">
                 <tr>
                   <th className="px-6 py-4 text-left text-sm font-semibold">
                     Pet Name
                   </th>
-
                   <th className="px-6 py-4 text-left text-sm font-semibold">
                     Category
                   </th>
-
                   <th className="px-6 py-4 text-left text-sm font-semibold">
                     Breed
                   </th>
-
                   <th className="px-6 py-4 text-left text-sm font-semibold">
                     Age
                   </th>
-
                   <th className="px-6 py-4 text-left text-sm font-semibold">
                     Sex
                   </th>
-
                   <th className="px-6 py-4 text-left text-sm font-semibold">
                     Weight
                   </th>
-
                   <th className="px-6 py-4 text-left text-sm font-semibold">
                     Medical History
                   </th>
-
                   <th className="px-6 py-4 text-center text-sm font-semibold">
                     Actions
                   </th>
@@ -192,10 +172,8 @@ const AdminPetProfile = () => {
                   filteredPets.map((pet, index) => (
                     <tr
                       key={pet._id}
-                      className={`border-b border-blue-50 hover:bg-cyan-50 transition-all duration-200 ${
-                        index % 2 === 0
-                          ? "bg-white"
-                          : "bg-blue-50/30"
+                      className={`border-b hover:bg-blue-50 transition duration-200 ${
+                        index % 2 === 0 ? "bg-white" : "bg-gray-50"
                       }`}
                     >
                       <td className="px-6 py-5 font-semibold text-gray-800">
@@ -203,7 +181,7 @@ const AdminPetProfile = () => {
                       </td>
 
                       <td className="px-6 py-5">
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-cyan-100 text-cyan-700 border border-cyan-200">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
                           {pet.category}
                         </span>
                       </td>
@@ -230,28 +208,25 @@ const AdminPetProfile = () => {
 
                       <td className="px-6 py-5">
                         <div className="flex justify-center items-center gap-3">
-
                           <button
                             onClick={() => handleEdit(pet)}
-                            className="bg-cyan-100 hover:bg-cyan-200 text-cyan-700 p-3 rounded-xl shadow-sm hover:scale-105 transition-all duration-200"
+                            className="bg-blue-100 hover:bg-blue-200 text-blue-600 p-3 rounded-xl transition duration-200"
                           >
                             <FaRegEdit size={18} />
                           </button>
 
                           <button
                             onClick={() => handleDelete(pet)}
-                            className="bg-rose-100 hover:bg-rose-200 text-rose-600 p-3 rounded-xl shadow-sm hover:scale-105 transition-all duration-200"
+                            className="bg-red-100 hover:bg-red-200 text-red-600 p-3 rounded-xl transition duration-200"
                           >
                             <MdDelete size={20} />
                           </button>
-
                         </div>
                       </td>
                     </tr>
                   ))
                 )}
               </tbody>
-
             </table>
           </div>
         </div>
