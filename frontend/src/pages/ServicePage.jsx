@@ -350,22 +350,22 @@ export default function Services() {
         </div>
       </section>
 
-            {/* Service Categories Navigation */}
+      {/* Service Categories Navigation */}
       <section className="py-12 bg-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-72 h-72 bg-gradient-to-r from-[#6D9886]/10 to-[#8FB8A8]/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-wrap justify-center gap-3 px-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {Object.entries(services).map(([key, service]) => {
               const IconComponent = service.icon;
               return (
                 <button
                   key={key}
                   onClick={() => setActiveService(key)}
-                  className={`flex items-center gap-2 px-6 py-4 rounded-2xl font-semibold transition-all duration-300 text-sm sm:text-base whitespace-nowrap ${
+                  className={`flex items-center space-x-3 px-8 py-4 rounded-2xl font-semibold transition-all duration-500 transform hover:-translate-y-2 shadow-lg ${
                     activeService === key
-                      ? "text-white shadow-xl scale-105"
-                      : "bg-white text-[#393E46] hover:shadow-md border border-gray-100"
+                      ? "text-white scale-105 shadow-xl"
+                      : "bg-white text-[#393E46] hover:shadow-xl border border-white/20"
                   }`}
                   style={{
                     background:
@@ -374,7 +374,7 @@ export default function Services() {
                         : undefined,
                   }}
                 >
-                  <IconComponent className="h-5 w-5 flex-shrink-0" />
+                  <IconComponent className="h-6 w-6" />
                   <span>{service.title}</span>
                 </button>
               );
@@ -483,7 +483,7 @@ export default function Services() {
         `}</style>
       </section>
 
-            {/* Service Comparison */}
+      {/* Service Comparison Table */}
       <section
         ref={comparisonRef}
         className="py-20 bg-white relative overflow-hidden"
@@ -500,48 +500,101 @@ export default function Services() {
               Service <span className="text-[#6D9886]">Packages</span>
             </h2>
             <p className="text-xl text-[#6c757d] max-w-2xl mx-auto">
-              Compare our different service packages
+              Compare our different service packages to find the perfect fit for
+              your pet
             </p>
           </div>
 
-          {/* Mobile Cards instead of Table */}
-          <div className="grid grid-cols-1 md:hidden gap-6">
-            {["Basic", "Standard", "Premium"].map((pkg, idx) => (
-              <div key={idx} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-                <h3 className="text-2xl font-bold text-center mb-6 text-[#393E46]">{pkg}</h3>
-                <ul className="space-y-4">
-                  {[
-                    "Wellness Exam",
-                    "Vaccinations",
-                    "Blood Work",
-                    "Dental Cleaning",
-                    "Emergency Discount",
-                  ].map((item, i) => (
-                    <li key={i} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
-                      <span className="text-[#6c757d]">{item}</span>
-                      <span className="font-semibold text-[#6D9886]">
-                        {idx === 0 && i === 0 ? "✓" : 
-                         idx === 0 && i === 1 ? "Core only" : 
-                         idx === 0 ? "-" : 
-                         idx === 1 && i === 4 ? "10%" : 
-                         idx === 2 && i === 4 ? "20%" : "✓"}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="text-center mt-8">
-                  <div className="text-3xl font-bold text-[#6D9886]">
-                    {idx === 0 ? "LKR 7500" : idx === 1 ? "LKR 15000" : "LKR 25000"}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Original Table - Hidden on Mobile */}
-          <div className="hidden md:block overflow-x-auto">
+          <div
+            className={`overflow-x-auto transition-all duration-1000 delay-300 ${
+              comparisonInView
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
+          >
             <table className="w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-white/20">
-              {/* ... keep your original table code here ... */}
+              <thead className="bg-gradient-to-r from-[#6D9886] to-[#8FB8A8] text-white">
+                <tr>
+                  <th className="px-8 py-6 text-left font-bold text-lg">
+                    Service
+                  </th>
+                  <th className="px-8 py-6 text-center font-bold text-lg">
+                    Basic
+                  </th>
+                  <th className="px-8 py-6 text-center font-bold text-lg">
+                    Standard
+                  </th>
+                  <th className="px-8 py-6 text-center font-bold text-lg">
+                    Premium
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    service: "Wellness Exam",
+                    basic: "✓",
+                    standard: "✓",
+                    premium: "✓",
+                  },
+                  {
+                    service: "Vaccinations",
+                    basic: "Core only",
+                    standard: "✓",
+                    premium: "✓",
+                  },
+                  {
+                    service: "Blood Work",
+                    basic: "-",
+                    standard: "Basic",
+                    premium: "Comprehensive",
+                  },
+                  {
+                    service: "Dental Cleaning",
+                    basic: "-",
+                    standard: "-",
+                    premium: "✓",
+                  },
+                  {
+                    service: "Emergency Discount",
+                    basic: "-",
+                    standard: "10%",
+                    premium: "20%",
+                  },
+                ].map((row, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? "bg-white" : "bg-[#FAFAFA]"}
+                  >
+                    <td className="px-8 py-6 font-semibold text-[#393E46]">
+                      {row.service}
+                    </td>
+                    <td className="px-8 py-6 text-center text-[#6c757d]">
+                      {row.basic}
+                    </td>
+                    <td className="px-8 py-6 text-center text-[#6c757d]">
+                      {row.standard}
+                    </td>
+                    <td className="px-8 py-6 text-center text-[#6c757d]">
+                      {row.premium}
+                    </td>
+                  </tr>
+                ))}
+                <tr className="bg-gradient-to-r from-[#F8F9FA] to-[#E9ECEF]">
+                  <td className="px-8 py-6 font-bold text-[#393E46] text-lg">
+                    Price
+                  </td>
+                  <td className="px-8 py-6 text-center font-bold text-[#6D9886] text-lg">
+                    LKR 7500
+                  </td>
+                  <td className="px-8 py-6 text-center font-bold text-[#6D9886] text-lg">
+                    LKR 15000
+                  </td>
+                  <td className="px-8 py-6 text-center font-bold text-[#6D9886] text-lg">
+                    LKR 25000
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
