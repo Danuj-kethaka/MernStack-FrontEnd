@@ -310,7 +310,7 @@ export default function About() {
         </div>
       </section>
 
-            {/* Our Story Timeline */}
+      {/* Our Story Timeline */}
       <section
         ref={timelineRef}
         className="py-20 bg-gradient-to-br from-[#F7F3F0] to-[#F8F9FA] relative overflow-hidden"
@@ -328,28 +328,33 @@ export default function About() {
             </p>
           </div>
 
-          <div className="relative max-w-4xl mx-auto">
-            {/* Vertical Line - Visible on all screens */}
-            <div className="absolute left-6 md:left-1/2 top-8 bottom-8 w-1 bg-gradient-to-b from-[#6D9886] to-[#8FB8A8] rounded-full"></div>
+          <div className="relative">
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-[#6D9886] to-[#8FB8A8] hidden lg:block"></div>
 
             {timeline.map((item, index) => (
               <div
                 key={index}
-                className={`relative flex flex-col md:flex-row gap-8 mb-16 last:mb-0 transition-all duration-1000 ${
-                  timelineInView ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+                className={`flex flex-col lg:flex-row items-center mb-16 ${
+                  index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+                } transition-all duration-1000 ${
+                  timelineInView
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
                 }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
+                style={{ transitionDelay: `${index * 200}ms` }}
               >
-                {/* Timeline Dot */}
-                <div className="absolute left-6 md:left-1/2 w-5 h-5 bg-white border-4 border-[#6D9886] rounded-full -translate-x-1/2 z-10"></div>
-
-                {/* Content */}
-                <div className={`flex-1 ${index % 2 === 0 ? "md:pr-12" : "md:pl-12 md:text-right"} pl-16 md:pl-0`}>
-                  <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500">
-                    <div className="inline-block bg-gradient-to-r from-[#6D9886] to-[#8FB8A8] text-white px-5 py-2 rounded-full font-bold mb-4">
-                      {item.year}
+                <div
+                  className={`w-full lg:w-1/2 ${
+                    index % 2 === 0 ? "lg:pr-12" : "lg:pl-12"
+                  }`}
+                >
+                  <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-white/20">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-gradient-to-r from-[#6D9886] to-[#8FB8A8] text-white px-6 py-2 rounded-full font-bold text-lg shadow-md">
+                        {item.year}
+                      </div>
                     </div>
-                    <h3 className="text-2xl font-bold text-[#393E46] mb-3">
+                    <h3 className="text-2xl font-bold text-[#393E46] mb-4">
                       {item.title}
                     </h3>
                     <p className="text-[#6c757d] leading-relaxed">
@@ -358,17 +363,20 @@ export default function About() {
                   </div>
                 </div>
 
-                {/* Image */}
-                <div className="flex-1 pl-16 md:pl-0">
-                  <div className="relative rounded-2xl overflow-hidden shadow-lg group">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-64 md:h-72 object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
+                  <div className="relative group cursor-pointer">
+                    <div className="absolute -inset-4 bg-gradient-to-r from-[#6D9886] to-[#8FB8A8] rounded-2xl transform rotate-3 shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative bg-white rounded-2xl p-2 shadow-lg group-hover:shadow-xl transition-all duration-500">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="rounded-xl w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
                   </div>
                 </div>
+
+                <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gradient-to-r from-[#6D9886] to-[#8FB8A8] rounded-full border-4 border-white shadow-lg"></div>
               </div>
             ))}
           </div>
